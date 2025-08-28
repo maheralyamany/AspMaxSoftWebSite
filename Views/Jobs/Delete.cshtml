@@ -1,0 +1,57 @@
+﻿@model MaxSoftWebSite.Models.Job
+
+@{
+    ViewBag.Title = "الحذف";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="col-md-offset-1">@ViewBag.Title</h2>
+
+    <div class="alert alert-danger col-md-offset-1 col-md-10">
+        <h3><span class="glyphicon glyphicon-remove"></span>  هل تريد تأكيد الحذف؟ </h3>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.JobTitle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobContent)
+            </dt>
+
+            <dd>
+                @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.JobContent).ToString()))
+
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobImage)
+            </dt>
+
+            <dd>
+                <img src="~/Uploads/@Html.DisplayFor(model => model.JobImage)" class="thumbnail" style="width:64px;height:64px;" />
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm("Delete", "jobs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-actions no-color">
+                <input type="submit" value="تأكيد الحذف" class="btn btn-danger" />
+                @Html.ActionLink("  العودة للقائمة السابقة", "Index", "", new { @class = "glyphicon glyphicon-circle-arrow-left btn btn-info" })
+            </div>
+        }
+    </div>

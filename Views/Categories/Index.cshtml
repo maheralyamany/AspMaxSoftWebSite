@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MaxSoftWebSite.Models.Category>
+
+@{
+    ViewBag.Title = "قائمة انواع الوظائف";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> @ViewBag.Title </h2>
+
+<p>
+    @Html.ActionLink("إنشاء نوع جديد", "Create",null,new { @class="btn btn-default"})
+</p>
+<table class="table table-bordered">
+    <thead class="table-hover0">
+        <tr class="heading1">
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryDescription)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tbody class="table-hover1">
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(modelItem => item.CategoryDescription).ToString()))
+                        
+                    </td>
+                    <td>
+                        @Html.ActionLink("تعديل", "Edit", new { id = item.Id },new {@class= "btn btn-primary btn-sm" }) 
+                        @Html.ActionLink("تفاصيل", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-sm" }) 
+                        @Html.ActionLink("حذف", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+                </tbody>
+                }
+</table>

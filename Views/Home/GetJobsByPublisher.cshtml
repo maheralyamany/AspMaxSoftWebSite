@@ -1,0 +1,45 @@
+﻿ @model IEnumerable<MaxSoftWebSite.Models.JobsViewModel>
+
+@foreach (var gr in Model)
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">@gr.JobTitle</h3>
+        </div>
+    <div class="panel-body mypanel" >
+        <table class="table table-bordered">
+            <thead class="table-hover0">
+                <tr class="heading1">
+                    <th>
+                        اسم الباحث
+                    </th>
+                    <th>
+                        الرسالة
+                    </th>
+                    <th>
+                        تاريخ الارسال
+                    </th>
+                </tr>
+            </thead>
+            @foreach (var item in gr.Items)
+            {
+                <tbody class="table-hover1">
+                    <tr >
+                        <td>
+                            @item.user.UserName
+                        </td>
+                        <td>
+                            @Html.Raw(HttpUtility.HtmlDecode(item.Message))
+                            
+                        </td>
+                        <td>
+                            @item.ApplyDate
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+    </div>
+   
+}

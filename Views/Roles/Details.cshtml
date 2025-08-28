@@ -1,0 +1,25 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+@{
+    ViewBag.Title = "تفاصيل نوع المستخدم";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="col-md-offset-1">@ViewBag.Title</h2>
+<div class="col-md-offset-1 col-md-10 alert alert-info">
+
+    <dl class="dl-horizontal">
+        <dt>
+           نوع المستخدم
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+    <p>
+        @Html.ActionLink("تعديل", "Edit", new { id = Model.Id }, new { @class = "btn btn-default" })
+        @Html.ActionLink("العودة الى القائمة", "Index")
+    </p>
+</div>

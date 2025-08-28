@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNet.Identity
+@using MaxSoftWebSite.Models;
+@if (Request.IsAuthenticated)
+{
+	using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+	{
+		var db = new ApplicationDbContext();
+		var UserID = User.Identity.GetUserId();
+		var CurrentUser = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+		var UserTitle = CurrentUser.UserName.Split(' ')[0];
+		@Html.AntiForgeryToken();
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-user"></span>
+                <strong >مرحبا بك : @UserTitle</strong>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <div class="navbar-user">
+                        <div class="row">
+							<div class="col-sm-3">
+								<img src="~/Images/UserImg.png" class="center-block img-size" />
+							</div>
+							<div class="col-sm-9 text-center">
+								<p class="text-right">المستخدم: @CurrentUser.UserName </p>
+								<p class="text-right">التلفون: @CurrentUser.PhoneNumber </p>
+							</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="divider"></li>
+                <li>
+                   <div class="btn-options">
+                       <div class="row">
+                           <div class="col-sm-12">
+                               <p>
+                                   @if (CurrentUser.UserType == "الناشرون")
+                                   {
+                                       <a href="~/Home/GetJobsByPublisher" class="btn btn-info btn-block">وظائف قمت بنشرها</a>
+                                       <a href="/Jobs/Index" class="btn btn-success btn-block">إدارة الوظائف</a>
+                                   }
+                                   else if (CurrentUser.UserType == "Admins")
+                                   {
+                                    <a href="~/Roles/Index" class="btn btn-info btn-block">إدارة انواع الحسابات</a>
+                                    <a href = "/Categories" class="btn btn-primary btn-block">إدارة انواع الوظائف</a>
+                                   }
+                                   else
+                                   {
+                                    <a href="~/Home/GetJobsByUser" class="btn btn-success btn-block">وظائف تقدمت لها</a>
+                                   }
+                                   <a href="~/Account/EditProfile" class="btn btn-primary btn-block">تعديل الحساب</a>
+                               </p>
+                           </div>
+                       </div>
+                   </div>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <div class="btn-options">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-danger btn-block"><span class="glyphicon glyphicon-log-out"></span> تسجيل الخروج </a>
+                                </p>
+                            </div>
+                        </div>
+                        </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a  href="~/Account/Login">
+                <i class="glyphicon glyphicon-log-in"></i>  تسجيل الدخول
+            </a>
+        </li>
+        <li>
+            <a  href="~/Account/Register">
+                <i class="glyphicon glyphicon-lock"></i>  اشتراك
+            </a>
+        </li>
+    </ul>
+}

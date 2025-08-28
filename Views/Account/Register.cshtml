@@ -1,0 +1,73 @@
+﻿@model MaxSoftWebSite.Models.RegisterViewModel
+@{
+	ViewBag.Title = "التسجيل ";
+}
+@*<script src="~/Scripts/register-script.js"></script>*@
+<h2 class="col-md-offset-1">@ViewBag.Title.</h2>
+<div class="col-md-offset-1 col-md-10 form-horizontal myform">
+	@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+		@Html.AntiForgeryToken()
+		<h4>إنشاء حساب جديد.</h4>
+		<hr />
+		if ((bool)ViewData["ErrorT"] == false) {
+			@Html.ValidationSummary("", new { @class = "text-danger" })
+		}
+		<div class="form-group">
+			@Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+
+				@Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @value = "" })
+				@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+
+			</div>
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(m => m.UserType, new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+
+				@Html.DropDownList("UserType", null, "اختر-نوع-المستخدم", new { @class = "form-control input-lg dropdownlist" })
+				@Html.ValidationMessage("UserType", "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" class="zocial secondary" value="تسجيل" />
+			</div>
+		</div>
+	}
+</div>
+@section scripts{
+	<script>
+		$(function () {
+			setTimeout(function () {
+				$("#UserName").val("");
+				$("#PhoneNumber").val("");
+				$("#Password").val("");
+				$("#ConfirmPassword").val("");
+			}, 800);
+		});
+	</script>
+}
+@*@Scripts.Render("~/bundles/register")*@
